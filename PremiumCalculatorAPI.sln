@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30330.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremiumCalculatorAPI", "PremiumCalculatorAPI\PremiumCalculatorAPI.csproj", "{BF6B1E9E-CD5D-425E-AF0C-61D0C1658528}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{73CC9EBE-2758-4CD8-BA12-9668995CD82D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF6B1E9E-CD5D-425E-AF0C-61D0C1658528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6B1E9E-CD5D-425E-AF0C-61D0C1658528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6B1E9E-CD5D-425E-AF0C-61D0C1658528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF6B1E9E-CD5D-425E-AF0C-61D0C1658528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73CC9EBE-2758-4CD8-BA12-9668995CD82D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73CC9EBE-2758-4CD8-BA12-9668995CD82D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73CC9EBE-2758-4CD8-BA12-9668995CD82D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73CC9EBE-2758-4CD8-BA12-9668995CD82D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {71017F90-F657-4B32-B560-FC0A44570EC4}
+	EndGlobalSection
+EndGlobal
