@@ -8,6 +8,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CustomerDetailsComponent implements OnInit {
   customerForm: FormGroup;
+  minDate: Date;
+  maxDate: Date;
+  calculatedPremium: number;
+  occupations = [
+    { value: 'Light Manual', text: 'Cleaner' },
+    { value: 'Professional', text: 'Doctor' },
+    { value: 'White Collar', text: 'Author' },
+    { value: 'Heavy Manual', text: 'Farmer' },
+    { value: 'Heavy Manual', text: 'Mechanic' },
+    { value: 'Light Manual', text: 'Florist' }
+  ];
   validationMessages = {
     'name': {
       'required': 'Name is required.',
@@ -40,9 +51,7 @@ export class CustomerDetailsComponent implements OnInit {
     'sumInsured': ''
   };
 
-  constructor(private fb: FormBuilder) {
-
-  }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.customerForm = this.fb.group({
@@ -55,6 +64,25 @@ export class CustomerDetailsComponent implements OnInit {
     this.customerForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.customerForm);
     });
+    this.customerForm.controls.dateOfBirth.valueChanges.subscribe((dateOfBirth)=>{
+      this.customerForm.controls.age.setValue(this.calculateAge(dateOfBirth));
+    })
+    this.minDate = new Date(1900, 0, 1);
+    this.maxDate = new Date();
+  }
+
+  calculateAge(dateOfBirth){
+    var ageDifMs = Date.now() - dateOfBirth;
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
+  getCalculatedPremium(): void {
+    if(this.customerForm.valid)
+    return;
+    else{
+
+    }
   }
 
   logValidationErrors(group: FormGroup = this.customerForm): void {
@@ -74,6 +102,11 @@ export class CustomerDetailsComponent implements OnInit {
         this.logValidationErrors(abstractControl);
       }
     });
+  }
+
+  onFocusOutEvent(event:any) {
+    this.customerForm.controls.dateOfBirth.markAsTouched();
+    this.logValidationErrors();
   }
 
 }

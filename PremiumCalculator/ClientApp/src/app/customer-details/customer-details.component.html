@@ -1,1 +1,41 @@
-<p>customer-details works!</p>
+<mat-toolbar class="header align-content-center">
+    <span>Premium Calculator</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+        <form [formGroup]="customerForm" class="my-form">
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput id="name" formControlName="name" (blur)="logValidationErrors()">
+                <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Date Of Birth</mat-label>
+                <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="DD/MM/YYYY" id="dateOfBirth" formControlName="dateOfBirth" (focus)="picker.open()" (focusout)="onFocusOutEvent($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker (closed)="onFocusOutEvent($event)"></mat-datepicker>
+                <mat-error *ngIf="formErrors.dateOfBirth">{{formErrors.dateOfBirth}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Age</mat-label>
+                <input matInput id="age" formControlName="age" (blur)="logValidationErrors()" readonly>
+                <mat-error *ngIf="formErrors.age">{{formErrors.age}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Death – Sum Insured</mat-label>
+                <span matPrefix>$&nbsp;</span>
+                <span matSuffix>AUD</span>
+                <input matInput id="sumInsured" formControlName="sumInsured" (blur)="logValidationErrors()">
+                <mat-error *ngIf="formErrors.sumInsured">{{formErrors.sumInsured}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Occupation</mat-label>
+                <mat-select formControlName="occupation" (blur)="logValidationErrors()" (selectionChange)="getCalculatedPremium()">
+                    <mat-option *ngFor="let occupation of occupations" value="occupation.value">{{occupation.text}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="formErrors.occupation">{{formErrors.occupation}}</mat-error>
+            </mat-form-field>
+            <h4>Your calculated premium is: {{calculatedPremium|currency}} AUD</h4>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -5,7 +5,7 @@ import { CustomerDetailsComponent } from './customer-details/customer-details.co
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [{ path: 'customerdetails', component: CustomerDetailsComponent },
-  { path: '',  redirectTo: '/home', pathMatch: 'full' },
+  { path: '',  redirectTo: '/customerdetails', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }]
 
 @NgModule({
