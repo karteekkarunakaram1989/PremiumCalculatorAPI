@@ -33,7 +33,7 @@ import { MatCardModule, MatDatepickerModule, MatFormFieldModule, MatInputModule,
     FormsModule
   ],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'en-AU'}
+    { provide: MAT_DATE_LOCALE, useValue: 'en-AU' }
   ],
   bootstrap: [AppComponent]
 })

@@ -11,15 +11,14 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Date Of Birth</mat-label>
-                <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="DD/MM/YYYY" id="dateOfBirth" formControlName="dateOfBirth" (focus)="picker.open()" (focusout)="onFocusOutEvent($event)">
+                <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="DD/MM/YYYY" id="dateOfBirth" formControlName="dateOfBirth" (focus)="picker.open()" (focusout)="onFocusOutEvent($event)" (onchange)="getCalculatedPremium()" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker (closed)="onFocusOutEvent($event)"></mat-datepicker>
                 <mat-error *ngIf="formErrors.dateOfBirth">{{formErrors.dateOfBirth}}</mat-error>
             </mat-form-field>
             <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Age</mat-label>
-                <input matInput id="age" formControlName="age" (blur)="logValidationErrors()" readonly>
-                <mat-error *ngIf="formErrors.age">{{formErrors.age}}</mat-error>
+                <input matInput id="age" formControlName="age" readonly>
             </mat-form-field>
             <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Death – Sum Insured</mat-label>
@@ -31,11 +30,12 @@
             <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Occupation</mat-label>
                 <mat-select formControlName="occupation" (blur)="logValidationErrors()" (selectionChange)="getCalculatedPremium()">
-                    <mat-option *ngFor="let occupation of occupations" value="occupation.value">{{occupation.text}}</mat-option>
+                    <mat-option *ngFor="let occupation of occupations" value="{{occupation.value}}">{{occupation.text}}
+                    </mat-option>
                 </mat-select>
                 <mat-error *ngIf="formErrors.occupation">{{formErrors.occupation}}</mat-error>
             </mat-form-field>
-            <h4>Your calculated premium is: {{calculatedPremium|currency}} AUD</h4>
+            <h4 *ngIf="canShowResult">Your calculated premium is: {{calculatedPremium|currency}} AUD</h4>
         </form>
     </mat-card-content>
 </mat-card>

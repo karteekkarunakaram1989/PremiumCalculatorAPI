@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomerDetails } from '../models/customer-details';
+import { PremiumServiceService } from '../services/premium-service.service';
 
 @Component({
   selector: 'app-customer-details',
@@ -11,6 +13,8 @@ export class CustomerDetailsComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
   calculatedPremium: number;
+  customerDetails: CustomerDetails;
+  canShowResult = false;
   occupations = [
     { value: 'Light Manual', text: 'Cleaner' },
     { value: 'Professional', text: 'Doctor' },
@@ -51,7 +55,7 @@ export class CustomerDetailsComponent implements OnInit {
     'sumInsured': ''
   };
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private _premiumService: PremiumServiceService) { }
 
   ngOnInit() {
     this.customerForm = this.fb.group({
@@ -64,25 +68,41 @@ export class CustomerDetailsComponent implements OnInit {
     this.customerForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.customerForm);
     });
-    this.customerForm.controls.dateOfBirth.valueChanges.subscribe((dateOfBirth)=>{
+    this.customerForm.controls.dateOfBirth.valueChanges.subscribe((dateOfBirth) => {
       this.customerForm.controls.age.setValue(this.calculateAge(dateOfBirth));
     })
     this.minDate = new Date(1900, 0, 1);
     this.maxDate = new Date();
   }
 
-  calculateAge(dateOfBirth){
+  calculateAge(dateOfBirth) {
     var ageDifMs = Date.now() - dateOfBirth;
     var ageDate = new Date(ageDifMs); // miliseconds from epoch
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
   getCalculatedPremium(): void {
-    if(this.customerForm.valid)
-    return;
-    else{
-
+    if (!this.customerForm.valid)
+      return;
+    else {
+      this.mapFormValuesToCustomerDetailsModel();
+      this._premiumService.getCalculatedPremium(this.customerDetails).subscribe(result => {
+        this.calculatedPremium = result
+        this.canShowResult = this.calculatedPremium > 0
+      },
+        (err: any) => {
+          this.canShowResult = false;
+          console.log(err)
+        }
+      );
     }
+  }
+
+  mapFormValuesToCustomerDetailsModel() {
+    this.customerDetails = new CustomerDetails();
+    this.customerDetails.age = this.customerForm.value.age;
+    this.customerDetails.occupationRating = this.customerForm.value.occupation;
+    this.customerDetails.sumInsured = this.customerForm.value.sumInsured;
   }
 
   logValidationErrors(group: FormGroup = this.customerForm): void {
@@ -104,7 +124,7 @@ export class CustomerDetailsComponent implements OnInit {
     });
   }
 
-  onFocusOutEvent(event:any) {
+  onFocusOutEvent(event: any) {
     this.customerForm.controls.dateOfBirth.markAsTouched();
     this.logValidationErrors();
   }

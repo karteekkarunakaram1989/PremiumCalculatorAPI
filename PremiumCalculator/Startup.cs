@@ -50,7 +50,13 @@ namespace PremiumCalculator
             {
                 app.UseSpaStaticFiles();
             }
-
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "api/{controller}/{action=Index}/{id?}");
+            });
             app.UseCors("CorsPolicy");
             app.UseSpa(spa =>
             {

@@ -5,12 +5,12 @@ import { CustomerDetailsComponent } from './customer-details/customer-details.co
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [{ path: 'customerdetails', component: CustomerDetailsComponent },
-  { path: '',  redirectTo: '/customerdetails', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }]
+{ path: '', redirectTo: '/customerdetails', pathMatch: 'full' },
+{ path: '**', component: PageNotFoundComponent }]
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -33,13 +33,18 @@ namespace PremiumCalculator.Controllers
         #endregion
 
         [HttpGet]
-        [Route("getCalculatedPremium")]
-        public async Task<ActionResult<double>> CalculatePremium(CustomerDetails customerDetails)
+        public async Task<ActionResult<double>> Get(string age, string occupationRating, string sumInsured)
         {
             try
             {
+                var customerDetails = new CustomerDetails()
+                {
+                    Age = Convert.ToInt32(age),
+                    OccupationRating = occupationRating,
+                    SumInsured = Convert.ToDouble(sumInsured)
+                };
                 var calculatedPremium = await _premiumCalculatorService.CalculatePremium(customerDetails);
-                return Ok(calculatedPremium);
+                return Ok(100);
             }
             catch (Exception ex)
             {
