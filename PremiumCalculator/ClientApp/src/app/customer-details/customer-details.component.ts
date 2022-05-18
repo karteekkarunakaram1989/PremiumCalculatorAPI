@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomerDetails } from '../models/customer-details';
+import { FormValidationService } from '../services/form-validation.service';
 import { PremiumServiceService } from '../services/premium-service.service';
 
 @Component({
@@ -43,7 +44,8 @@ export class CustomerDetailsComponent implements OnInit {
     'sumInsured': {
       'required': 'Insured amount is required.',
       'min': 'Minimum insured amount should be $1,000 AUD',
-      'max': 'Maximum insured amount can be $100,000 AUD'
+      'max': 'Maximum insured amount can be $100,000 AUD',
+      'invalidDecimal': 'Please enter the amount in numbers or decimals in 2digits(ex: $1234.56)'
     }
   }
 
@@ -55,7 +57,7 @@ export class CustomerDetailsComponent implements OnInit {
     'sumInsured': ''
   };
 
-  constructor(private fb: FormBuilder, private _premiumService: PremiumServiceService) { }
+  constructor(private fb: FormBuilder, private _premiumService: PremiumServiceService, private _formsValidationService: FormValidationService) { }
 
   ngOnInit() {
     this.customerForm = this.fb.group({
@@ -63,7 +65,7 @@ export class CustomerDetailsComponent implements OnInit {
       age: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       occupation: ['', Validators.required],
-      sumInsured: ['', [Validators.required, Validators.min(1000), Validators.max(100000)]]
+      sumInsured: ['', [Validators.required, Validators.min(1000), Validators.max(100000), this._formsValidationService.allowNumbersAndDecimals()]]
     });
     this.customerForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.customerForm);
