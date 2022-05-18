@@ -44,7 +44,7 @@ namespace PremiumCalculator.Controllers
                     SumInsured = Convert.ToDouble(sumInsured)
                 };
                 var calculatedPremium = await _premiumCalculatorService.CalculatePremium(customerDetails);
-                return Ok(100);
+                return Ok(calculatedPremium);
             }
             catch (Exception ex)
             {
